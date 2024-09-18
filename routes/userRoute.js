@@ -16,10 +16,9 @@ router.post('/createUser', async (req, res) => {
     }
 })
 
-router.get('/getUser', async(req, res) => {
+router.get('/getUser', auth, async(req, res) => {
     try{
-        const u = await User.find({});
-        res.send(u);
+        res.send(req.user)
     }catch(error){
         re.send(error)
     }
