@@ -3,14 +3,8 @@ const User = require('../models/userSchema')
 
 const auth = async (req, res, next) => {
     try {
-        console.log('ji')
         const authHeader = req.header('Authorization');
         console.log(authHeader);
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            throw new Error('Authorization header is missing or malformed');
-        }
-
-        const token = authHeader.replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'NekoGift');
         
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
